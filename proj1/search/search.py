@@ -121,11 +121,11 @@ def depthFirstSearch(problem: SearchProblem):
     # until we meet the target or the stack become empty, every place we have been reached
     path, current_node = [], goal
     while current_node != (point, None, None):  # we add all the
-        path.append(
-            current_node[1]
+        path.insert(
+            0, current_node[1]
         )  # From the goal back to get the path, add into path
         current_node = cache[current_node]
-    path.reverse()  # reverse our path to the normal return value
+    print(path)
     return path
     # util.raiseNotDefined()
 
@@ -133,7 +133,41 @@ def depthFirstSearch(problem: SearchProblem):
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    point = problem.getStartState()
+    queue = []
+    path = []
+    goal = None
+    cache = {}  # S
+
+    for i in problem.getSuccessors(point):
+        key = "%d_%d" % (i[0][0], i[0][1])
+        cache[key] = (point, None, None)
+        queue.append(i)
+
+    while queue:
+        p = queue.pop(0)
+        if problem.isGoalState(p[0]):
+            goal = p
+
+            break
+        for i in problem.getSuccessors(p[0]):
+            key = "%d_%d" % (i[0][0], i[0][1])
+            if key in cache:
+                continue
+            cache[key] = p
+            queue.append(i)
+
+    node = goal
+    while node[1] != None:
+        path.insert(0, node[1])
+        key = "%d_%d" % (node[0][0], node[0][1])
+        node = cache[key]
+        if node[1] == None:
+            break
+
+    return path
+
+    # util.raiseNotDefined()
 
 
 def uniformCostSearch(problem: SearchProblem):
