@@ -125,87 +125,71 @@ def depthFirstSearch(problem: SearchProblem):
             0, current_node[1]
         )  # From the goal back to get the path, add into path
         current_node = cache[current_node]
-    print(path)
+    # print(path)
     return path
     # util.raiseNotDefined()
 
 
+class Node:
+    def __init__(self, state, prev, action, priority=0) -> None:
+        self.state = state
+        self.prev = prev
+        self.action = action
+        self.priority = priority
+
+
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
-    point = problem.getStartState()
-    queue = []
-    path = []
-    goal = None
-    cache = {}  # S
-
-    for i in problem.getSuccessors(point):
-        key = "%d_%d" % (i[0][0], i[0][1])
-        cache[key] = (point, None, None)
-        queue.append(i)
+    closed = set()
+    cache = {}
+    queue = [Node(problem.getStartState(), None, None)]
 
     while queue:
-        p = queue.pop(0)
-        if problem.isGoalState(p[0]):
-            goal = p
-            break
-        for i in problem.getSuccessors(p[0]):
-            key = "%d_%d" % (i[0][0], i[0][1])
-            if key in cache:
-                continue
-            cache[key] = p
-            queue.append(i)
+        node = queue.pop(0)
 
-    node = goal
-    while node[1] != None:
-        path.insert(0, node[1])
-        key = "%d_%d" % (node[0][0], node[0][1])
-        node = cache[key]
-        if node[1] == None:
-            break
+        if problem.isGoalState(node.state) == True:  # reached the end
+            actions = []
+            while node.action is not None:
+                actions.insert(0, node.action)
+                node = node.prev
+            return actions
 
-    return path
+        # still running
+        if node.state in closed:
+            continue
+        closed.add(node.state)
+        for s in problem.getSuccessors(node.state):
+            queue.append(Node(s[0], node, s[1]))
+    return []
 
     # util.raiseNotDefined()
 
 
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
-    point = problem.getStartState()
+    closed = set()
+    cache = {}
     queue = util.PriorityQueue()
-    path = []
-    goal = None
-    cache = {}  # S
-    costs = {}
-
-    for i in problem.getSuccessors(point):
-        key = "%d_%d" % (i[0][0], i[0][1])
-        cache[key] = (point, None, None)
-        costs[key] = i[2]
-        queue.push(i, i[2])
+    queue.push(Node(problem.getStartState(), None, None), 0)
 
     while queue:
-        p = queue.pop()
-        if problem.isGoalState(p[0]):
-            goal = p
-            break
+        node = queue.pop()
+        if problem.isGoalState(node.state) == True:  # reached the end
+            actions = []
+            while node.action is not None:
+                actions.insert(0, node.action)
+                node = node.prev
+            return actions
 
-        for i in problem.getSuccessors(p[0]):
-            key = "%d_%d" % (i[0][0], i[0][1])
-            if key in cache:
-                continue
-            cache[key] = p
-            queue.push(i, i[2])
-
-    node = goal
-    while node[1] != None:
-        path.insert(0, node[1])
-        key = "%d_%d" % (node[0][0], node[0][1])
-        node = cache[key]
-        if node[1] == None:
-            break
-
-    return path
+        # still running
+        if node.state in closed:
+            continue
+        closed.add(node.state)
+        for s in problem.getSuccessors(node.state):
+            queue.push(
+                Node(s[0], node, s[1], s[2] + node.priority), s[2] + node.priority
+            )
+    return []
 
 
 def nullHeuristic(state, problem=None):
