@@ -516,6 +516,18 @@ class AStarFoodSearchAgent(SearchAgent):
         self.searchType = FoodSearchProblem
 
 
+class NewState:
+    def __init__(self, state, walls):
+        self.state = state
+        self.walls = walls
+
+    def getWalls(self):
+        return self.walls
+
+    def getPacmanPosition(self):
+        return self.state[0]
+
+
 def foodHeuristic(state: Tuple[Tuple, List[List]], problem: FoodSearchProblem):
     """
     Your heuristic for the FoodSearchProblem goes here.
@@ -545,8 +557,16 @@ def foodHeuristic(state: Tuple[Tuple, List[List]], problem: FoodSearchProblem):
     problem.heuristicInfo['wallCount']
     """
     position, foodGrid = state
-    "*** YOUR CODE HERE ***"
-    return 0
+    ret = 0
+    # print(type(foodGrid))
+    for i in range(foodGrid.height):
+        for j in range(foodGrid.width):
+            if not foodGrid[j][i]:
+                continue
+            ret = max(
+                ret, mazeDistance((j, i), position, NewState(state, problem.walls))
+            )
+    return ret
 
 
 class ClosestDotSearchAgent(SearchAgent):
