@@ -148,7 +148,6 @@ def breadthFirstSearch(problem: SearchProblem):
         p = queue.pop(0)
         if problem.isGoalState(p[0]):
             goal = p
-
             break
         for i in problem.getSuccessors(p[0]):
             key = "%d_%d" % (i[0][0], i[0][1])
@@ -172,8 +171,41 @@ def breadthFirstSearch(problem: SearchProblem):
 
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    point = problem.getStartState()
+    queue = util.PriorityQueue()
+    path = []
+    goal = None
+    cache = {}  # S
+    costs = {}
+
+    for i in problem.getSuccessors(point):
+        key = "%d_%d" % (i[0][0], i[0][1])
+        cache[key] = (point, None, None)
+        costs[key] = i[2]
+        queue.push(i, i[2])
+
+    while queue:
+        p = queue.pop()
+        if problem.isGoalState(p[0]):
+            goal = p
+            break
+
+        for i in problem.getSuccessors(p[0]):
+            key = "%d_%d" % (i[0][0], i[0][1])
+            if key in cache:
+                continue
+            cache[key] = p
+            queue.push(i, i[2])
+
+    node = goal
+    while node[1] != None:
+        path.insert(0, node[1])
+        key = "%d_%d" % (node[0][0], node[0][1])
+        node = cache[key]
+        if node[1] == None:
+            break
+
+    return path
 
 
 def nullHeuristic(state, problem=None):
