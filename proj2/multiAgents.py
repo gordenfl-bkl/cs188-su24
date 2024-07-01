@@ -358,7 +358,7 @@ def betterEvaluationFunction(currentGameState: GameState):
     capsuleDistance = 0
     if len(capsules) > 0 and max(newScaredTimes) > 25:
         if ghostDistance < 2:
-            return util.getMinValue()
+            return float('-inf')
         else:
             closestCapsule = 10000
             for capsule in capsules:
@@ -366,7 +366,7 @@ def betterEvaluationFunction(currentGameState: GameState):
                 if capsuleDistance < closestCapsule:
                     closestCapsule = capsuleDistance
     else:
-        capsuleDistance = util.getMaxValue()
+        capsuleDistance = float('inf')
 
     foodDistance = 0
     closestFood = (1234, 5678)
