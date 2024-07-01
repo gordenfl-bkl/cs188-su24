@@ -1,0 +1,5 @@
+Q4.5
+
+P(+e|+m) = P(+e) = 0.4
+
+e is independent with m

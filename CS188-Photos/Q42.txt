@@ -1,0 +1,12 @@
+Answer: The human would be better off using Dianabot rather than Albertbot when the expected reward of using Dianabot is greater than the expected reward of using Albertbot.
+
+Explanation:
+
+Let's denote the expected reward of using Dianabot as E(D) and the expected reward of using Albertbot as E(A).
+
+The condition under which the human is better off using Dianabot rather than Albertbot is E(D) > E(A).
+
+To find the values of E(D) and E(A), you would need to calculate the expected rewards based on the probabilities and outcomes in the expectimax trees for Dianabot and Albertbot.
+
+The exact calculations would depend on the specific probabilities and outcomes involved.
+

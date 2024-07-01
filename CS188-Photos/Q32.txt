@@ -1,0 +1,24 @@
+RH = max(A, B, C, D)  [1]
+RAH = max(A, B, C, D)  [2]
+
+Since RH and RAH are both equal to the maximum of A, B, C, and D, we can express them in terms of X and Y:
+
+RH = X + Yp  [3]
+RAH = X + Yp  [4]
+
+We need to find X and Y in terms of A, B, C, and D. To do this, let's consider the possible cases for X and Y:
+
+Case 1: X = max(A, B) and Y = max(C, D)
+In this case, the expressions for RH and RAH would be:
+
+RH = max(max(A, B), max(C, D)) = max(A, B, C, D)
+RAH = max(max(A, B), max(C, D)) = max(A, B, C, D)
+
+These equations satisfy the conditions in [1] and [2].
+
+Therefore, the final answer is:
+
+RH = max(A, B, C, D) + max(C, D)p
+RAH = max(A, B, C, D) + max(C, D)p
+
+Please note that this is one possible solution. Depending on the specific context and constraints of the problem, there may be other valid expressions for RH and RAH in terms of A, B, C, and D.

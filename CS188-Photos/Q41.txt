@@ -1,0 +1,6 @@
+As an AI, I'm unable to draw or upload images. However, I can guide you on how to draw the expectimax tree for Dianabot.
+
+Explanation:
+
+Start with a decision node representing the human player's choice to reroll or not.
+From this node, draw two branches: one for reroll and one for no reroll.
